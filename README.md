@@ -10,4 +10,9 @@
 
 <h2>Cronograma</h2>
 <p>Nosso trello:</p><a href="https://trello.com/w/connectfy2">https://trello.com/w/connectfy2</a>
-<img src="https://user-images.githubusercontent.com/72951026/236655067-444fcff6-b31f-4738-bf19-89686bc5c235.png"/>
+
+
+<div align="center">
+<img src="https://user-images.githubusercontent.com/72951026/236655067-444fcff6-b31f-4738-bf19-89686bc5c235.png" width="500px" />
+</div>
+
