@@ -10,3 +10,4 @@
 
 <h2>Cronograma</h2>
 <p>Nosso trello:</p><a href="https://trello.com/w/connectfy2">https://trello.com/w/connectfy2</a>
+<img src=""/>
