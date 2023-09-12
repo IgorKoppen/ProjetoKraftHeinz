@@ -1,24 +1,31 @@
-package model;
+package com.kraftheinz.kraftheinzbackend.model;
+
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "produtos")
 public class Produto {
-    private int codProduto;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="produto_sequence")
+    @SequenceGenerator(name="produto_sequence", sequenceName = "pdt_seq")
+    @Column(name = "PRODUTO_ID")
+    private Long codProduto;
     private String nome, descricao;
 
-    private List<AvaliacaoCliente> avaliacaoClientes = new ArrayList<>();
     public  Produto(){}
     public Produto(String nome, String descricao) {
         this.nome = nome;
         this.descricao = descricao;
     }
 
-    public int getCodProduto() {
+    public Long getCodProduto() {
         return codProduto;
     }
 
-    public void setCodProduto(int codProduto) {
+    public void setCodProduto(Long codProduto) {
         this.codProduto = codProduto;
     }
 
@@ -37,12 +44,5 @@ public class Produto {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
-    public List<AvaliacaoCliente> getAvaliacaoCliente() {
-        return avaliacaoClientes;
-    }
-
-    public void adicionarAvaliacaoCliente(AvaliacaoCliente avaliacaoCliente) {
-        avaliacaoClientes.add(avaliacaoCliente);
-    }
+    
 }
