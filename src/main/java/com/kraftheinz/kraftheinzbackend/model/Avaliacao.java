@@ -1,4 +1,4 @@
-package model;
+package com.kraftheinz.kraftheinzbackend.model;
 
 import java.sql.Date;
 

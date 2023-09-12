@@ -1,13 +1,21 @@
-package model;
+package com.kraftheinz.kraftheinzbackend.model;
 
+
+import jakarta.persistence.*;
 
 import java.sql.Date;
-
+@Entity
+@Table(name = "clientes")
 public class Cliente {
-    private int codCliente;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="cliente_sequence")
+    @SequenceGenerator(name="cliente_sequence", sequenceName = "clt_seq")
+    @Column(name = "CLIENTE_ID")
+    private Long codCliente;
     private String primeroNome, ultimoNome,senha,emailCliente,userName;
     private int idade;
     Date dataRegistro;
+
 
     public Cliente(){}
 
@@ -21,11 +29,11 @@ public class Cliente {
         this.dataRegistro = new Date(new java.util.Date().getTime());
     }
 
-    public int getCodCliente() {
+    public Long getCodCliente() {
         return codCliente;
     }
 
-    public void setCodCliente(int codCliente) {
+    public void setCodCliente(Long codCliente) {
         this.codCliente = codCliente;
     }
 
