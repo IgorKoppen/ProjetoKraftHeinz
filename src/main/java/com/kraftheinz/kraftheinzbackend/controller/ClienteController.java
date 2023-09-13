@@ -25,8 +25,8 @@ public class ClienteController {
     @PutMapping
     List<Cliente> update(@RequestBody Cliente cliente) {return clienteService.update(cliente);}
 
-    @DeleteMapping
-    List<Cliente> delete(Long cod){
+    @DeleteMapping("{cod}")
+    List<Cliente> delete(@PathVariable("cod") Long cod){
         return clienteService.delete(cod);
     }
 }

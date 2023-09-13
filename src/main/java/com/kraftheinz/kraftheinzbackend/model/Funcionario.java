@@ -2,20 +2,35 @@ package com.kraftheinz.kraftheinzbackend.model;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "FUNCIONARIOS")
 public class Funcionario {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="funcionario_sequence")
-    @SequenceGenerator(name="funcionario_sequence", sequenceName = "fun_seq")
+    @SequenceGenerator(name="funcionario_sequence", sequenceName = "funcionario_sequence", initialValue=1, allocationSize=1)
     @Column(name = "FUNCIONARIO_ID")
     private Long codFuncionario;
+    @Column(name="primeiro_nome")
     private String primeiroNome;
+    @Column(name="ultimo_nome")
     private String ultimoNome;
+
+    @Column(name="senha_func")
     private String senha;
+    @Column(name="cargo")
     private String cargo;
+    @Column(name="email_funcionario")
     private String emailFuncionario;
+    @Column(name="cpf")
     private int cpfFuncionario;
+
+    @OneToMany(mappedBy="funcionarios")
+    private Set<Produto> produtos;
+
+    @OneToMany(mappedBy = "funcionarios")
+    private Set<Marca> marcas;
 
 
     public Funcionario(String primeiroNome, String ultimoNome, String senha, String cargo, String emailFuncionario, int cpfFuncionario) {
@@ -84,5 +99,21 @@ public class Funcionario {
 
     public void setCpfFuncionario(int cpfFuncionario) {
         this.cpfFuncionario = cpfFuncionario;
+    }
+
+    public Set<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(Set<Produto> produtos) {
+        this.produtos = produtos;
+    }
+
+    public Set<Marca> getMarcas() {
+        return marcas;
+    }
+
+    public void setMarcas(Set<Marca> marcas) {
+        this.marcas = marcas;
     }
 }

@@ -29,8 +29,8 @@ public class MarcaController {
     List<Marca> update(@RequestBody  Marca marca){
         return marcaService.update(marca);
     }
-@DeleteMapping
-    List<Marca> delete(Long cod){
+    @DeleteMapping("{cod}")
+    List<Marca> delete(@PathVariable("cod") Long cod){
         return marcaService.delete(cod);
 }
 }

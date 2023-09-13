@@ -2,18 +2,33 @@ package com.kraftheinz.kraftheinzbackend.model;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "produtos")
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="produto_sequence")
-    @SequenceGenerator(name="produto_sequence", sequenceName = "pdt_seq")
+    @SequenceGenerator(name="produto_sequence", sequenceName = "produto_sequence",initialValue=1, allocationSize=1)
     @Column(name = "PRODUTO_ID")
     private Long codProduto;
-    private String nome, descricao;
+    @Column(name = "nome_produto")
+    private String nome;
+    @Column(name = "descricao")
+    private String descricao;
+    @ManyToOne
+    @JoinColumn(name="funcionario_id", nullable=false)
+    private Funcionario funcionarios;
+
+    @ManyToOne
+    @JoinColumn(name="marca_id", nullable=false)
+    private Marca marca;
+
+    @OneToMany(mappedBy = "produtos")
+    private Set<AvaliacaoFuncionario> avaliacaoFuncionarios;
+
+    @OneToMany(mappedBy = "produtos")
+    private Set<AvaliacaoCliente> avaliacaoClientes;
 
     public  Produto(){}
     public Produto(String nome, String descricao) {
@@ -44,5 +59,36 @@ public class Produto {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
+
+    public Funcionario getFuncionarios() {
+        return funcionarios;
+    }
+
+    public void setFuncionarios(Funcionario funcionarios) {
+        this.funcionarios = funcionarios;
+    }
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marcas) {
+        this.marca = marcas;
+    }
+
+    public Set<AvaliacaoFuncionario> getAvaliacaoFuncionarios() {
+        return avaliacaoFuncionarios;
+    }
+
+    public void setAvaliacaoFuncionarios(Set<AvaliacaoFuncionario> avaliacaoFuncionarios) {
+        this.avaliacaoFuncionarios = avaliacaoFuncionarios;
+    }
+
+    public Set<AvaliacaoCliente> getAvaliacaoClientes() {
+        return avaliacaoClientes;
+    }
+
+    public void setAvaliacaoClientes(Set<AvaliacaoCliente> avaliacaoClientes) {
+        this.avaliacaoClientes = avaliacaoClientes;
+    }
 }

@@ -4,17 +4,34 @@ package com.kraftheinz.kraftheinzbackend.model;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.util.Set;
+
 @Entity
 @Table(name = "clientes")
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="cliente_sequence")
-    @SequenceGenerator(name="cliente_sequence", sequenceName = "clt_seq")
+    @SequenceGenerator(name="cliente_sequence", sequenceName = "cliente_sequence",initialValue=1, allocationSize=1)
     @Column(name = "CLIENTE_ID")
     private Long codCliente;
-    private String primeroNome, ultimoNome,senha,emailCliente,userName;
+
+    @Column(name="primeiro_nome")
+    private String primeroNome;
+    @Column(name="ultimo_nome")
+    private String ultimoNome;
+    @Column(name="senha_cliente")
+    private String senha;
+    @Column(name="email_cliente")
+    private String emailCliente;
+    @Column(name="username")
+    private String userName;
+    @Column(name="idade")
     private int idade;
+    @Column(name="data_registro")
     Date dataRegistro;
+
+    @OneToMany(mappedBy = "clientes")
+    private Set<AvaliacaoCliente> avaliacaoClientes;
 
 
     public Cliente(){}
@@ -85,11 +102,19 @@ public class Cliente {
         this.idade = idade;
     }
 
-    public java.sql.Date getDataRegistro() {
+    public Date getDataRegistro() {
         return dataRegistro;
     }
 
     public void setDataRegistro(Date dataRegistro) {
         this.dataRegistro = dataRegistro;
+    }
+
+    public Set<AvaliacaoCliente> getAvaliacaoClientes() {
+        return avaliacaoClientes;
+    }
+
+    public void setAvaliacaoClientes(Set<AvaliacaoCliente> avaliacaoClientes) {
+        this.avaliacaoClientes = avaliacaoClientes;
     }
 }
