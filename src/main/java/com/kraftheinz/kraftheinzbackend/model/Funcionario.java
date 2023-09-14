@@ -1,5 +1,7 @@
 package com.kraftheinz.kraftheinzbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -27,9 +29,11 @@ public class Funcionario {
     private int cpfFuncionario;
 
     @OneToMany(mappedBy="funcionarios")
+    @JsonManagedReference
     private Set<Produto> produtos;
 
     @OneToMany(mappedBy = "funcionarios")
+    @JsonManagedReference
     private Set<Marca> marcas;
 
 

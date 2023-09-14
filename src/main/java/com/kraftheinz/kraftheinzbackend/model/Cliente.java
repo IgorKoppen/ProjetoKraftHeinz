@@ -1,6 +1,8 @@
 package com.kraftheinz.kraftheinzbackend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.sql.Date;
@@ -31,6 +33,7 @@ public class Cliente {
     Date dataRegistro;
 
     @OneToMany(mappedBy = "clientes")
+    @JsonManagedReference
     private Set<AvaliacaoCliente> avaliacaoClientes;
 
 

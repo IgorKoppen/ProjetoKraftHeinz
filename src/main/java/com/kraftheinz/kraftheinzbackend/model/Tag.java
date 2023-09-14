@@ -1,5 +1,6 @@
 package com.kraftheinz.kraftheinzbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -17,9 +18,11 @@ public class Tag {
     private String nome;
 
     @ManyToMany(mappedBy = "tags")
+    @JsonManagedReference
     Set<AvaliacaoFuncionario> avaliacaoFuncionarioSet;
 
     @ManyToMany(mappedBy = "tags")
+    @JsonManagedReference
     Set<AvaliacaoCliente> avaliacaoClienteSet;
 
     public Tag(String nome) {

@@ -1,5 +1,7 @@
 package com.kraftheinz.kraftheinzbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.sql.Date;
@@ -29,17 +31,21 @@ public class AvaliacaoFuncionario{
             name = "AUX_AVALIACOES_FUNCIONARIOS",
             joinColumns = @JoinColumn(name = "AVALIACOES_FUNCIONARIO_ID"),
             inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
+    @JsonManagedReference
     Set<Tag> tags;
     @ManyToOne
     @JoinColumn(name="funcionario_id", nullable=false)
+    @JsonBackReference
     private Funcionario funcionarios;
 
     @ManyToOne
     @JoinColumn(name="produto_id", nullable=false)
+    @JsonBackReference
     private Produto produtos;
 
     @ManyToOne
     @JoinColumn(name="marca_id", nullable=false)
+    @JsonBackReference
     private Marca marcas;
 
     public AvaliacaoFuncionario(Long codAvalicaoFuncionario, String mensagem, Date dataAvalicao, String redeSocial, String usuarioPostagem, Set<Tag> tags, Funcionario funcionarios, Produto produtos, Marca marcas) {

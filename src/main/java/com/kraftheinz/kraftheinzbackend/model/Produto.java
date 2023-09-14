@@ -1,5 +1,7 @@
 package com.kraftheinz.kraftheinzbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -22,12 +24,15 @@ public class Produto {
 
     @ManyToOne
     @JoinColumn(name="marca_id", nullable=false)
+    @JsonBackReference
     private Marca marca;
 
     @OneToMany(mappedBy = "produtos")
+    @JsonManagedReference
     private Set<AvaliacaoFuncionario> avaliacaoFuncionarios;
 
     @OneToMany(mappedBy = "produtos")
+    @JsonManagedReference
     private Set<AvaliacaoCliente> avaliacaoClientes;
 
     public  Produto(){}
