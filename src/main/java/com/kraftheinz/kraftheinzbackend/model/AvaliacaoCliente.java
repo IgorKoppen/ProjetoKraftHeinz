@@ -2,6 +2,7 @@ package com.kraftheinz.kraftheinzbackend.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -19,35 +20,35 @@ final public class AvaliacaoCliente{
     @Column(name = "mensagem_ac")
     private String mensagem;
     @Column(name = "data_avaliacao_ac")
-    private Date dataAvalicao;
+    private Date dataAvalicao = new Date(new java.util.Date().getTime());
     @ManyToMany
     @JoinTable(
             name = "AUX_AVALIACOES_CLIENTES",
             joinColumns = @JoinColumn(name = "AVALIACOES_CLIENTE_ID"),
             inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
-    @JsonManagedReference
-    Set<Tag> tags;
+    @JsonIgnore
+    Set<Tag> tagsCliente;
 
     @ManyToOne
     @JoinColumn(name="cliente_id", nullable=false)
-    @JsonBackReference
+    @JsonBackReference(value = "clientes-avaliacoesclientes")
     private Cliente clientes;
 
     @ManyToOne
     @JoinColumn(name="produto_id", nullable=false)
-    @JsonBackReference
+    @JsonBackReference(value = "produtos-avaliacoesclientes")
     private Produto produtos;
 
     @ManyToOne
     @JoinColumn(name="marca_id", nullable=false)
-    @JsonBackReference
+    @JsonBackReference(value = "marcas-avaliacaoclientes")
     private Marca marcas;
 
     public AvaliacaoCliente(Long codAvaliacoesCliente, String mensagem, Date dataAvalicao, Set<Tag> tags, Cliente clientes, Produto produtos, Marca marcas) {
         this.codAvaliacoesCliente = codAvaliacoesCliente;
         this.mensagem = mensagem;
         this.dataAvalicao = new Date(new java.util.Date().getTime());
-        this.tags = tags;
+        this.tagsCliente = tags;
         this.clientes = clientes;
         this.produtos = produtos;
         this.marcas = marcas;
@@ -64,12 +65,12 @@ final public class AvaliacaoCliente{
         this.codAvaliacoesCliente = codAvaliacoesCliente;
     }
 
-    public Set<Tag> getTags() {
-        return tags;
+    public Set<Tag> getTagsCliente() {
+        return tagsCliente;
     }
 
-    public void setTags(Set<Tag> tagClientSet) {
-        this.tags = tagClientSet;
+    public void setTagsCliente(Set<Tag> tagClientSet) {
+        this.tagsCliente = tagClientSet;
     }
 
     public Cliente getCliente() {

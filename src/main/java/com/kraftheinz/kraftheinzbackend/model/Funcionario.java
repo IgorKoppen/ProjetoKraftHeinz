@@ -1,6 +1,5 @@
 package com.kraftheinz.kraftheinzbackend.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -18,7 +17,6 @@ public class Funcionario {
     private String primeiroNome;
     @Column(name="ultimo_nome")
     private String ultimoNome;
-
     @Column(name="senha_func")
     private String senha;
     @Column(name="cargo")
@@ -28,14 +26,16 @@ public class Funcionario {
     @Column(name="cpf")
     private int cpfFuncionario;
 
-    @OneToMany(mappedBy="funcionarios")
-    @JsonManagedReference
-    private Set<Produto> produtos;
-
     @OneToMany(mappedBy = "funcionarios")
-    @JsonManagedReference
-    private Set<Marca> marcas;
+    @JsonManagedReference(value = "funcionario-avaliacaofuncionario")
+    private Set<AvaliacaoFuncionario> avaliacaoFuncionarios;
 
+    @OneToMany(mappedBy= "funcionario")
+    @JsonManagedReference(value = "produto-funcionario")
+    private Set<Produto> produtos;
+    @OneToMany(mappedBy = "funcionario")
+    @JsonManagedReference(value = "marcas-funcionario")
+    private Set<Marca> marcas;
 
     public Funcionario(String primeiroNome, String ultimoNome, String senha, String cargo, String emailFuncionario, int cpfFuncionario) {
         this.primeiroNome = primeiroNome;
@@ -105,6 +105,7 @@ public class Funcionario {
         this.cpfFuncionario = cpfFuncionario;
     }
 
+
     public Set<Produto> getProdutos() {
         return produtos;
     }
@@ -112,6 +113,7 @@ public class Funcionario {
     public void setProdutos(Set<Produto> produtos) {
         this.produtos = produtos;
     }
+
 
     public Set<Marca> getMarcas() {
         return marcas;

@@ -17,23 +17,23 @@ public class Cliente {
     @Column(name = "CLIENTE_ID")
     private Long codCliente;
 
-    @Column(name="primeiro_nome")
+    @Column(name="primeiro_nome",nullable = false)
     private String primeroNome;
-    @Column(name="ultimo_nome")
+    @Column(name="ultimo_nome",nullable = false)
     private String ultimoNome;
-    @Column(name="senha_cliente")
+    @Column(name="senha_cliente",nullable = false)
     private String senha;
-    @Column(name="email_cliente")
+    @Column(name="email_cliente", unique = true,nullable = false)
     private String emailCliente;
-    @Column(name="username")
+    @Column(name="username",nullable = false)
     private String userName;
     @Column(name="idade")
     private int idade;
-    @Column(name="data_registro")
-    Date dataRegistro;
+    @Column(name="data_registro",nullable = false)
+    Date dataRegistro = new Date(new java.util.Date().getTime());
 
     @OneToMany(mappedBy = "clientes")
-    @JsonManagedReference
+    @JsonManagedReference(value = "clientes-avaliacoesclientes")
     private Set<AvaliacaoCliente> avaliacaoClientes;
 
 

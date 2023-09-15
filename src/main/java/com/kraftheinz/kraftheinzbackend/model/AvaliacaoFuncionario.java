@@ -1,6 +1,7 @@
 package com.kraftheinz.kraftheinzbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -19,7 +20,7 @@ public class AvaliacaoFuncionario{
     @Column(name = "mensagem_af")
     private String mensagem;
     @Column(name = "data_avaliacao_af")
-    private Date dataAvalicao;
+    private Date dataAvalicao = new Date(new java.util.Date().getTime());
     @Column(name="rede_social")
     private String redeSocial;
 
@@ -31,21 +32,21 @@ public class AvaliacaoFuncionario{
             name = "AUX_AVALIACOES_FUNCIONARIOS",
             joinColumns = @JoinColumn(name = "AVALIACOES_FUNCIONARIO_ID"),
             inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
-    @JsonManagedReference
-    Set<Tag> tags;
+    @JsonIgnore
+    Set<Tag> tagsFuncionario;
     @ManyToOne
     @JoinColumn(name="funcionario_id", nullable=false)
-    @JsonBackReference
+    @JsonBackReference(value = "funcionario-avaliacaofuncionario")
     private Funcionario funcionarios;
 
     @ManyToOne
     @JoinColumn(name="produto_id", nullable=false)
-    @JsonBackReference
+    @JsonBackReference(value = "produto-avaliacaofuncionarios")
     private Produto produtos;
 
     @ManyToOne
     @JoinColumn(name="marca_id", nullable=false)
-    @JsonBackReference
+    @JsonBackReference(value = "marcas-avaliacaofuncionario")
     private Marca marcas;
 
     public AvaliacaoFuncionario(Long codAvalicaoFuncionario, String mensagem, Date dataAvalicao, String redeSocial, String usuarioPostagem, Set<Tag> tags, Funcionario funcionarios, Produto produtos, Marca marcas) {
@@ -54,7 +55,7 @@ public class AvaliacaoFuncionario{
         this.dataAvalicao = new Date(new java.util.Date().getTime());
         this.redeSocial = redeSocial;
         this.usuarioPostagem = usuarioPostagem;
-        this.tags = tags;
+        this.tagsFuncionario = tags;
         this.funcionarios = funcionarios;
         this.produtos = produtos;
         this.marcas = marcas;
@@ -105,12 +106,12 @@ public class AvaliacaoFuncionario{
         this.usuarioPostagem = usuarioPostagem;
     }
 
-    public Set<Tag> getTags() {
-        return tags;
+    public Set<Tag> getTagsFuncionario() {
+        return tagsFuncionario;
     }
 
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
+    public void setTagsFuncionario(Set<Tag> tags) {
+        this.tagsFuncionario = tags;
     }
 
     public Funcionario getFuncionarios() {

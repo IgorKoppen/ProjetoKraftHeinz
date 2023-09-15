@@ -1,9 +1,6 @@
 package com.kraftheinz.kraftheinzbackend.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -20,20 +17,21 @@ public class Marca {
     private String nome;
 
     @ManyToOne
-    @JoinColumn(name="funcionario_id", nullable=false)
-    private Funcionario funcionarios;
+    @JoinColumn(name = "FUNCIONARIO_ID", nullable = false)
+    @JsonBackReference(value = "marcas-funcionario")
+    private Funcionario funcionario;
 
-    @OneToMany(mappedBy = "marcas")
-    @JsonManagedReference
+    @OneToMany
+    @JsonManagedReference(value = "marcas-avaliacaofuncionario")
     private Set<AvaliacaoFuncionario> avaliacaoFuncionarios;
 
-    @OneToMany(mappedBy = "marcas")
-    @JsonManagedReference
+    @OneToMany
+    @JsonManagedReference(value = "marcas-avaliacaoclientes")
     private Set<AvaliacaoCliente> avaliacaoClientes;
 
 
     @OneToMany(mappedBy="marca")
-    @JsonManagedReference
+    @JsonManagedReference(value = "marcas-produtos")
     private Set<Produto> produtos;
 
     public Marca(String nome) {
@@ -59,12 +57,13 @@ public class Marca {
         this.nome = nome;
     }
 
-    public Funcionario getFuncionarios() {
-        return funcionarios;
+
+    public Funcionario getFuncionario() {
+        return funcionario;
     }
 
-    public void setFuncionarios(Funcionario funcionarios) {
-        this.funcionarios = funcionarios;
+    public void setFuncionario(Funcionario funcionarios) {
+        this.funcionario = funcionarios;
     }
 
     public Set<AvaliacaoFuncionario> getAvaliacaoFuncionarios() {

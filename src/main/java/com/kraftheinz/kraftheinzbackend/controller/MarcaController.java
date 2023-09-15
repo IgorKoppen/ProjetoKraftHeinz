@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/marcas")
 public class MarcaController {
-    private MarcaService marcaService;
+    private final MarcaService marcaService;
 
     public MarcaController(MarcaService marcaService) {
         this.marcaService = marcaService;

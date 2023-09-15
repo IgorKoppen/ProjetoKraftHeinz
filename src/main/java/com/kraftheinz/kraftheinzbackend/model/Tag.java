@@ -1,6 +1,7 @@
 package com.kraftheinz.kraftheinzbackend.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -17,13 +18,13 @@ public class Tag {
     @Column(name="nome_tag")
     private String nome;
 
-    @ManyToMany(mappedBy = "tags")
-    @JsonManagedReference
-    Set<AvaliacaoFuncionario> avaliacaoFuncionarioSet;
+    @ManyToMany(mappedBy = "tagsFuncionario")
+    @JsonIgnore
+    Set<AvaliacaoFuncionario> avaliacaoFuncionario;
 
-    @ManyToMany(mappedBy = "tags")
-    @JsonManagedReference
-    Set<AvaliacaoCliente> avaliacaoClienteSet;
+    @ManyToMany(mappedBy = "tagsCliente")
+    @JsonIgnore
+    Set<AvaliacaoCliente> avaliacaoCliente;
 
     public Tag(String nome) {
         this.nome = nome;
@@ -48,19 +49,19 @@ public class Tag {
         this.nome = nome;
     }
 
-    public Set<AvaliacaoFuncionario> getAvaliacaoFuncionarioSet() {
-        return avaliacaoFuncionarioSet;
+    public Set<AvaliacaoFuncionario> getAvaliacaoFuncionario() {
+        return avaliacaoFuncionario;
     }
 
-    public void setAvaliacaoFuncionarioSet(Set<AvaliacaoFuncionario> avaliacaoFuncionarioSet) {
-        this.avaliacaoFuncionarioSet = avaliacaoFuncionarioSet;
+    public void setAvaliacaoFuncionario(Set<AvaliacaoFuncionario> avaliacaoFuncionarioSet) {
+        this.avaliacaoFuncionario = avaliacaoFuncionarioSet;
     }
 
-    public Set<AvaliacaoCliente> getAvaliacaoClienteSet() {
-        return avaliacaoClienteSet;
+    public Set<AvaliacaoCliente> getAvaliacaoCliente() {
+        return avaliacaoCliente;
     }
 
-    public void setAvaliacaoClienteSet(Set<AvaliacaoCliente> avaliacaoClienteSet) {
-        this.avaliacaoClienteSet = avaliacaoClienteSet;
+    public void setAvaliacaoCliente(Set<AvaliacaoCliente> avaliacaoClienteSet) {
+        this.avaliacaoCliente = avaliacaoClienteSet;
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/avaliacaofuncionarios")
 public class AvaliacaoFuncionarioController {
-    private AvaliacaoFuncionarioService avaliacaoFuncionarioService;
+    private final AvaliacaoFuncionarioService avaliacaoFuncionarioService;
 
     public AvaliacaoFuncionarioController(AvaliacaoFuncionarioService avaliacaoFuncionarioService) { this.avaliacaoFuncionarioService = avaliacaoFuncionarioService; }
 

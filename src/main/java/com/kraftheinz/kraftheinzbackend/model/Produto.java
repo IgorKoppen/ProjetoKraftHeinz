@@ -19,20 +19,21 @@ public class Produto {
     @Column(name = "descricao")
     private String descricao;
     @ManyToOne
-    @JoinColumn(name="funcionario_id", nullable=false)
-    private Funcionario funcionarios;
+    @JoinColumn(name = "FUNCIONARIO_ID", nullable = false)
+    @JsonBackReference(value = "produto-funcionario")
+    private Funcionario funcionario;
 
     @ManyToOne
     @JoinColumn(name="marca_id", nullable=false)
-    @JsonBackReference
+    @JsonBackReference(value = "marcas-produtos")
     private Marca marca;
 
     @OneToMany(mappedBy = "produtos")
-    @JsonManagedReference
+    @JsonManagedReference(value = "produto-avaliacaoFuncionarios")
     private Set<AvaliacaoFuncionario> avaliacaoFuncionarios;
 
     @OneToMany(mappedBy = "produtos")
-    @JsonManagedReference
+    @JsonManagedReference(value = "produtos-avaliacoesclientes")
     private Set<AvaliacaoCliente> avaliacaoClientes;
 
     public  Produto(){}
@@ -65,12 +66,12 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public Funcionario getFuncionarios() {
-        return funcionarios;
+    public Funcionario getFuncionario() {
+        return funcionario;
     }
 
-    public void setFuncionarios(Funcionario funcionarios) {
-        this.funcionarios = funcionarios;
+    public void setFuncionario(Funcionario funcionarios) {
+        this.funcionario = funcionarios;
     }
 
     public Marca getMarca() {
