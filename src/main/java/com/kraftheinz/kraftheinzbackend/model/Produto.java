@@ -29,7 +29,7 @@ public class Produto {
     private Marca marca;
 
     @OneToMany(mappedBy = "produtos")
-    @JsonManagedReference(value = "produto-avaliacaoFuncionarios")
+    @JsonManagedReference(value = "produto-avaliacaofuncionarios")
     private Set<AvaliacaoFuncionario> avaliacaoFuncionarios;
 
     @OneToMany(mappedBy = "produtos")

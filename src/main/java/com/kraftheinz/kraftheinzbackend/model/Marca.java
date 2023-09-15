@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "marcas")
+@Table(name = "MARCAS")
 public class Marca {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="marca_sequence")
@@ -21,11 +21,11 @@ public class Marca {
     @JsonBackReference(value = "marcas-funcionario")
     private Funcionario funcionario;
 
-    @OneToMany
+    @OneToMany(mappedBy = "marcas")
     @JsonManagedReference(value = "marcas-avaliacaofuncionario")
     private Set<AvaliacaoFuncionario> avaliacaoFuncionarios;
 
-    @OneToMany
+    @OneToMany(mappedBy = "marcas")
     @JsonManagedReference(value = "marcas-avaliacaoclientes")
     private Set<AvaliacaoCliente> avaliacaoClientes;
 
