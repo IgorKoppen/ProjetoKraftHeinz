@@ -1,7 +1,6 @@
 package com.kraftheinz.kraftheinzbackend.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -16,18 +15,20 @@ public class Tag {
     private int codTag;
 
     @Column(name="nome_tag")
-    private String nome;
+    private String nomeTag;
 
     @ManyToMany(mappedBy = "tagsFuncionario")
-    @JsonIgnore
+    @JsonIgnoreProperties("tagsFuncionario")
     Set<AvaliacaoFuncionario> avaliacaoFuncionario;
 
     @ManyToMany(mappedBy = "tagsCliente")
-    @JsonIgnore
+    @JsonIgnoreProperties("tagsCliente")
     Set<AvaliacaoCliente> avaliacaoCliente;
 
-    public Tag(String nome) {
-        this.nome = nome;
+    public Tag(String nomeTag, Set<AvaliacaoFuncionario> avaliacaoFuncionario, Set<AvaliacaoCliente> avaliacaoCliente) {
+        this.nomeTag = nomeTag;
+        this.avaliacaoFuncionario = avaliacaoFuncionario;
+        this.avaliacaoCliente = avaliacaoCliente;
     }
 
     public Tag() {
@@ -41,12 +42,12 @@ public class Tag {
         this.codTag = codTag;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeTag() {
+        return nomeTag;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeTag(String nome) {
+        this.nomeTag = nome;
     }
 
     public Set<AvaliacaoFuncionario> getAvaliacaoFuncionario() {

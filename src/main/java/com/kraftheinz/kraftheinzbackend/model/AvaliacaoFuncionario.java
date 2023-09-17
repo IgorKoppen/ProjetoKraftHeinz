@@ -2,6 +2,7 @@ package com.kraftheinz.kraftheinzbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -27,12 +28,12 @@ public class AvaliacaoFuncionario{
     @Column(name = "usuario_postagem")
     private String usuarioPostagem;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "AUX_AVALIACOES_FUNCIONARIOS",
             joinColumns = @JoinColumn(name = "AVALIACOES_FUNCIONARIO_ID"),
             inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
-    @JsonIgnore
+    @JsonIgnoreProperties(value = {"avaliacaoFuncionario","avaliacaoCliente"})
     Set<Tag> tagsFuncionario;
     @ManyToOne
     @JoinColumn(name="funcionario_id", nullable=false)

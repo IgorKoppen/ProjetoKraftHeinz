@@ -3,6 +3,7 @@ package com.kraftheinz.kraftheinzbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -21,12 +22,12 @@ final public class AvaliacaoCliente{
     private String mensagem;
     @Column(name = "data_avaliacao_ac")
     private Date dataAvalicao = new Date(new java.util.Date().getTime());
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "AUX_AVALIACOES_CLIENTES",
             joinColumns = @JoinColumn(name = "AVALIACOES_CLIENTE_ID"),
             inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
-    @JsonIgnore
+    @JsonIgnoreProperties(value = {"avaliacaoFuncionario","avaliacaoCliente"})
     Set<Tag> tagsCliente;
 
     @ManyToOne
@@ -35,12 +36,12 @@ final public class AvaliacaoCliente{
     private Cliente clientes;
 
     @ManyToOne
-    @JoinColumn(name="produto_id", nullable=false)
+    @JoinColumn(name="produto_id")
     @JsonBackReference(value = "produtos-avaliacoesclientes")
     private Produto produtos;
 
     @ManyToOne
-    @JoinColumn(name="marca_id", nullable=false)
+    @JoinColumn(name="marca_id")
     @JsonBackReference(value = "marcas-avaliacaoclientes")
     private Marca marcas;
 
@@ -65,35 +66,51 @@ final public class AvaliacaoCliente{
         this.codAvaliacoesCliente = codAvaliacoesCliente;
     }
 
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
+    }
+
+    public Date getDataAvalicao() {
+        return dataAvalicao;
+    }
+
+    public void setDataAvalicao(Date dataAvalicao) {
+        this.dataAvalicao = dataAvalicao;
+    }
+
     public Set<Tag> getTagsCliente() {
         return tagsCliente;
     }
 
-    public void setTagsCliente(Set<Tag> tagClientSet) {
-        this.tagsCliente = tagClientSet;
+    public void setTagsCliente(Set<Tag> tagsCliente) {
+        this.tagsCliente = tagsCliente;
     }
 
-    public Cliente getCliente() {
+    public Cliente getClientes() {
         return clientes;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.clientes = cliente;
+    public void setClientes(Cliente clientes) {
+        this.clientes = clientes;
     }
 
     public Produto getProdutos() {
         return produtos;
     }
 
-    public void setProdutos(Produto produto) {
-        this.produtos = produto;
+    public void setProdutos(Produto produtos) {
+        this.produtos = produtos;
     }
 
     public Marca getMarcas() {
         return marcas;
     }
 
-    public void setMarcas(Marca marca) {
-        this.marcas = marca;
+    public void setMarcas(Marca marcas) {
+        this.marcas = marcas;
     }
 }
