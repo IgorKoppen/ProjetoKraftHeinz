@@ -1,9 +1,11 @@
 package com.kraftheinz.kraftheinzbackend.controller;
 
 
+import com.kraftheinz.kraftheinzbackend.model.Marca;
 import com.kraftheinz.kraftheinzbackend.model.Produto;
 import com.kraftheinz.kraftheinzbackend.service.ProdutoService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,8 +19,8 @@ public class ProdutoController {
     }
 
     @PostMapping
-    List<Produto> create(@RequestBody Produto produto) {
-        return produtoService.create(produto);
+    List<Produto> create(@RequestPart Produto produto, @RequestPart MultipartFile file) {
+        return produtoService.create(produto, file);
     }
 
     @GetMapping

@@ -17,11 +17,11 @@ public class Tag {
     @Column(name="nome_tag")
     private String nomeTag;
 
-    @ManyToMany(mappedBy = "tagsFuncionario")
+    @ManyToMany(mappedBy = "tagsFuncionario",cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JsonIgnoreProperties("tagsFuncionario")
     Set<AvaliacaoFuncionario> avaliacaoFuncionario;
 
-    @ManyToMany(mappedBy = "tagsCliente")
+    @ManyToMany(mappedBy = "tagsCliente",cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JsonIgnoreProperties("tagsCliente")
     Set<AvaliacaoCliente> avaliacaoCliente;
 

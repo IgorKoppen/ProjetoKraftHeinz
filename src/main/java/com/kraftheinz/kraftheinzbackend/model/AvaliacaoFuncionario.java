@@ -13,7 +13,7 @@ import java.util.Set;
 @Table(name = "AVALIACOESFUNCIONARIOS")
 public class AvaliacaoFuncionario{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator ="avaliacoes_funcionario_sequence")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator ="avaliacoes_funcionario_sequence")
     @SequenceGenerator(name="avaliacoes_funcionario_sequence", sequenceName = "avaliacoes_funcionario_sequence", initialValue=1, allocationSize=1)
     @Column(name = "AVALIACOES_FUNCIONARIO_ID")
     private Long codAvalicaoFuncionario;
@@ -28,7 +28,7 @@ public class AvaliacaoFuncionario{
     @Column(name = "usuario_postagem")
     private String usuarioPostagem;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "AUX_AVALIACOES_FUNCIONARIOS",
             joinColumns = @JoinColumn(name = "AVALIACOES_FUNCIONARIO_ID"),
@@ -50,8 +50,7 @@ public class AvaliacaoFuncionario{
     @JsonBackReference(value = "marcas-avaliacaofuncionario")
     private Marca marcas;
 
-    public AvaliacaoFuncionario(Long codAvalicaoFuncionario, String mensagem, Date dataAvalicao, String redeSocial, String usuarioPostagem, Set<Tag> tags, Funcionario funcionarios, Produto produtos, Marca marcas) {
-        this.codAvalicaoFuncionario = codAvalicaoFuncionario;
+    public AvaliacaoFuncionario( String mensagem, Date dataAvalicao, String redeSocial, String usuarioPostagem, Set<Tag> tags, Funcionario funcionarios, Produto produtos, Marca marcas) {
         this.mensagem = mensagem;
         this.dataAvalicao = new Date(new java.util.Date().getTime());
         this.redeSocial = redeSocial;

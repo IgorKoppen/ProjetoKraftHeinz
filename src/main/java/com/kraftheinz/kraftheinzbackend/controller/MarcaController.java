@@ -1,9 +1,13 @@
 package com.kraftheinz.kraftheinzbackend.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kraftheinz.kraftheinzbackend.model.Marca;
+import com.kraftheinz.kraftheinzbackend.model.Produto;
 import org.springframework.web.bind.annotation.*;
 import com.kraftheinz.kraftheinzbackend.service.MarcaService;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,8 +21,8 @@ public class MarcaController {
     }
 
     @PostMapping
-    List<Marca> create(@RequestBody Marca marca) {
-        return marcaService.create(marca);
+    List<Marca> create(@RequestPart Marca marca,@RequestPart MultipartFile file)  {
+        return marcaService.create(marca, file);
     }
 
     @GetMapping

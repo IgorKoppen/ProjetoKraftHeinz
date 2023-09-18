@@ -18,6 +18,12 @@ public class Produto {
     private String nome;
     @Column(name = "descricao")
     private String descricao;
+    @Lob
+    @Column(name = "imagem", columnDefinition="BLOB")
+    private byte[] imagemProduto;
+
+    @Column(name = "type_pdt")
+    private String typeProduto;
     @ManyToOne
     @JoinColumn(name = "FUNCIONARIO_ID", nullable = false)
     @JsonBackReference(value = "produto-funcionario")
@@ -37,9 +43,16 @@ public class Produto {
     private Set<AvaliacaoCliente> avaliacaoClientes;
 
     public  Produto(){}
-    public Produto(String nome, String descricao) {
+
+    public Produto(String nome, String descricao, byte[] imagemProduto, String typeProduto, Funcionario funcionario, Marca marca, Set<AvaliacaoFuncionario> avaliacaoFuncionarios, Set<AvaliacaoCliente> avaliacaoClientes) {
         this.nome = nome;
         this.descricao = descricao;
+        this.imagemProduto = imagemProduto;
+        this.typeProduto = typeProduto;
+        this.funcionario = funcionario;
+        this.marca = marca;
+        this.avaliacaoFuncionarios = avaliacaoFuncionarios;
+        this.avaliacaoClientes = avaliacaoClientes;
     }
 
     public Long getCodProduto() {
@@ -66,20 +79,36 @@ public class Produto {
         this.descricao = descricao;
     }
 
+    public byte[] getImagemProduto() {
+        return imagemProduto;
+    }
+
+    public void setImagemProduto(byte[] imagemProduto) {
+        this.imagemProduto = imagemProduto;
+    }
+
+    public String getTypeProduto() {
+        return typeProduto;
+    }
+
+    public void setTypeProduto(String typeProduto) {
+        this.typeProduto = typeProduto;
+    }
+
     public Funcionario getFuncionario() {
         return funcionario;
     }
 
-    public void setFuncionario(Funcionario funcionarios) {
-        this.funcionario = funcionarios;
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
     }
 
     public Marca getMarca() {
         return marca;
     }
 
-    public void setMarca(Marca marcas) {
-        this.marca = marcas;
+    public void setMarca(Marca marca) {
+        this.marca = marca;
     }
 
     public Set<AvaliacaoFuncionario> getAvaliacaoFuncionarios() {

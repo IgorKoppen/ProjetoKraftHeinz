@@ -27,8 +27,6 @@ public class Cliente {
     private String emailCliente;
     @Column(name="username",nullable = false)
     private String userName;
-    @Column(name="idade")
-    private int idade;
     @Column(name="data_registro",nullable = false)
     Date dataRegistro = new Date(new java.util.Date().getTime());
 
@@ -39,13 +37,12 @@ public class Cliente {
 
     public Cliente(){}
 
-    public Cliente(String primeroNome, String ultimoNome, String senha, String emailCliente, String userName, int idade) {
+    public Cliente(String primeroNome, String ultimoNome, String senha, String emailCliente, String userName) {
         this.primeroNome = primeroNome;
         this.ultimoNome = ultimoNome;
         this.senha = senha;
         this.emailCliente = emailCliente;
         this.userName = userName;
-        this.idade = idade;
         this.dataRegistro = new Date(new java.util.Date().getTime());
     }
 
@@ -95,14 +92,6 @@ public class Cliente {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public int getIdade() {
-        return idade;
-    }
-
-    public void setIdade(int idade) {
-        this.idade = idade;
     }
 
     public Date getDataRegistro() {
