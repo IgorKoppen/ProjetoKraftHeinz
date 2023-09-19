@@ -5,11 +5,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kraftheinz.kraftheinzbackend.model.Marca;
 import com.kraftheinz.kraftheinzbackend.model.Produto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import com.kraftheinz.kraftheinzbackend.service.MarcaService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/marcas")
@@ -37,4 +40,12 @@ public class MarcaController {
     List<Marca> delete(@PathVariable("cod") Long cod){
         return marcaService.delete(cod);
 }
+    @GetMapping("{cod}")
+    Optional<Marca> findById(@PathVariable("cod") Long cod){ return marcaService.findById(cod);}
+
+    @GetMapping("paginada")
+    public Page<Marca> findAll(@RequestParam int page, @RequestParam int size) {
+        PageRequest pr = PageRequest.of(page,size);
+        return marcaService.listaPaginada(pr);
+    }
 }
