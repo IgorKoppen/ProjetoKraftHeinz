@@ -6,6 +6,7 @@ import com.kraftheinz.kraftheinzbackend.service.ClienteService;
 
 import java.util.List;
 
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {

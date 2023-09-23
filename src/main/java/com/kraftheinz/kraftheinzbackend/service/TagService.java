@@ -20,6 +20,13 @@ public class TagService {
         tagRepository.save(tag);
         return list();
     }
+    public int count(){
+        int count = 0;
+        tagRepository.count();
+        return count;
+    }
+
+
     public List<Tag> delete(Long cod) {
         tagRepository.deleteById(cod);
         return list();

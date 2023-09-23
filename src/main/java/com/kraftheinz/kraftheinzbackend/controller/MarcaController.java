@@ -7,13 +7,14 @@ import com.kraftheinz.kraftheinzbackend.model.Marca;
 import com.kraftheinz.kraftheinzbackend.model.Produto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.kraftheinz.kraftheinzbackend.service.MarcaService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
-
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("/marcas")
 public class MarcaController {
@@ -24,8 +25,10 @@ public class MarcaController {
     }
 
     @PostMapping
-    List<Marca> create(@RequestPart Marca marca,@RequestPart MultipartFile file)  {
-        return marcaService.create(marca, file);
+    List<Marca> create(@RequestPart String marca, @RequestPart  MultipartFile file) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Marca marca1 = objectMapper.readValue(marca, Marca.class);
+        return marcaService.create(marca1, file);
     }
 
     @GetMapping

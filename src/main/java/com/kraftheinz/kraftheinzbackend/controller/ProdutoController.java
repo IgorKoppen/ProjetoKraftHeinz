@@ -1,6 +1,8 @@
 package com.kraftheinz.kraftheinzbackend.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kraftheinz.kraftheinzbackend.model.Marca;
 import com.kraftheinz.kraftheinzbackend.model.Produto;
 import com.kraftheinz.kraftheinzbackend.service.ProdutoService;
@@ -14,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
-
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("/produto")
 public class ProdutoController {
@@ -25,9 +27,11 @@ public class ProdutoController {
     }
 
     @PostMapping
-    ResponseEntity<?> create(@RequestPart Produto produto, @RequestPart MultipartFile file) {
+    ResponseEntity<?> create(@RequestPart String produto, @RequestPart MultipartFile file) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Produto produto1 = objectMapper.readValue(produto, Produto.class);
         if(produto != null && file != null) {
-            return new ResponseEntity<>(produtoService.create(produto, file), HttpStatus.OK);
+            return new ResponseEntity<>(produtoService.create(produto1, file), HttpStatus.OK);
         }else{
             return new ResponseEntity<>("Faltou parametros para produto e file", HttpStatus.BAD_REQUEST);
         }

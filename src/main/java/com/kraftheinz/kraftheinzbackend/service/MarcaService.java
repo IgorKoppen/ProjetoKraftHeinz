@@ -22,7 +22,7 @@ private MarcaRepository marcaRepository;
     public List<Marca> create(Marca marca, MultipartFile imagemFile)  {
         try {
             marca.setImagemMarca(imagemFile.getBytes());
-            marca.setTypeMarca(imagemFile.getOriginalFilename());
+            marca.setTypeMarca(imagemFile.getName());
             marcaRepository.save(marca);
         } catch (IOException e){
             e.printStackTrace();

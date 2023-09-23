@@ -23,10 +23,11 @@ public class Cliente {
     private String ultimoNome;
     @Column(name="senha_cliente",nullable = false)
     private String senha;
-    @Column(name="email_cliente", unique = true,nullable = false)
-    private String emailCliente;
     @Column(name="username",nullable = false)
     private String userName;
+    @Column(name="email_cliente", unique = true,nullable = false)
+    private String emailCliente;
+
     @Column(name="data_registro",nullable = false)
     Date dataRegistro = new Date(new java.util.Date().getTime());
 

@@ -21,7 +21,7 @@ public class ProdutoService {
     public List<Produto> create(Produto produto, MultipartFile imagemFile) {
         try {
             produto.setImagemProduto(imagemFile.getBytes());
-            produto.setTypeProduto(imagemFile.getOriginalFilename());
+            produto.setTypeProduto(imagemFile.getName());
             produtoRepository.save(produto);
         } catch (IOException e){
             e.printStackTrace();
