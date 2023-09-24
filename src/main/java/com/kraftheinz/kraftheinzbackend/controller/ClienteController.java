@@ -1,6 +1,7 @@
 package com.kraftheinz.kraftheinzbackend.controller;
 
 import com.kraftheinz.kraftheinzbackend.model.Cliente;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.kraftheinz.kraftheinzbackend.service.ClienteService;
 
@@ -29,5 +30,10 @@ public class ClienteController {
     @DeleteMapping("{cod}")
     List<Cliente> delete(@PathVariable("cod") Long cod){
         return clienteService.delete(cod);
+    }
+
+    @PostMapping("/login")
+    ResponseEntity<?> login(@RequestParam(value = "email") String email, @RequestParam(value = "senha") String senha){
+        return clienteService.findByEmailSenha(email,senha);
     }
 }

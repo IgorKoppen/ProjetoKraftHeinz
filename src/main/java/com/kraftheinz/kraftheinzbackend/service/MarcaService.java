@@ -39,8 +39,14 @@ private MarcaRepository marcaRepository;
         return marcaRepository.findById(cod);
     }
 
-    public List<Marca> update(Marca marca){
-        marcaRepository.save(marca);
+    public List<Marca> update(Marca marca,MultipartFile imagemFile){
+        try {
+            marca.setImagemMarca(imagemFile.getBytes());
+            marca.setTypeMarca(imagemFile.getName());
+            marcaRepository.save(marca);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
         return list();
     }
     public List<Marca> delete(Long cod){

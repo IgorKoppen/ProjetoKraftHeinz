@@ -3,6 +3,8 @@ package com.kraftheinz.kraftheinzbackend.controller;
 import com.kraftheinz.kraftheinzbackend.model.Produto;
 import com.kraftheinz.kraftheinzbackend.model.Tag;
 import com.kraftheinz.kraftheinzbackend.service.TagService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +18,12 @@ public class TagController {
         this.tagService = tagService;
     }
     @PostMapping
-    List<Tag> create(@RequestBody Tag tag) {
-        return tagService.create(tag);
+    ResponseEntity<?> create(@RequestBody Tag tag) {
+        if(tag != null) {
+            return new ResponseEntity<>(tagService.create(tag), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("Faltou parametros para tag", HttpStatus.BAD_REQUEST);
+        }
     }
     @GetMapping
     List<Tag> list() {

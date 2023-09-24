@@ -18,19 +18,17 @@ public class ProdutoService {
     private ProdutoRepository produtoRepository;
 
     private ProdutoService(ProdutoRepository produtoRepository) { this.produtoRepository = produtoRepository;}
-    public List<Produto> create(Produto produto, MultipartFile imagemFile) {
-        try {
+    public List<Produto> create(Produto produto, MultipartFile imagemFile) throws IOException {
             produto.setImagemProduto(imagemFile.getBytes());
             produto.setTypeProduto(imagemFile.getName());
             produtoRepository.save(produto);
-        } catch (IOException e){
-            e.printStackTrace();
-        }
         return list();
     }
     public List<Produto> list() { return produtoRepository.findAll();}
-    public List<Produto> update(Produto produto) {
-        produtoRepository.save(produto);
+    public List<Produto> update(Produto produto, MultipartFile imagemFile) throws IOException {
+            produto.setImagemProduto(imagemFile.getBytes());
+            produto.setTypeProduto(imagemFile.getName());
+            produtoRepository.save(produto);
         return list();
     }
     public List<Produto> delete(Long cod) {

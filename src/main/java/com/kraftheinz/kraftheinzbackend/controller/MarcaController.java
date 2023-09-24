@@ -36,8 +36,10 @@ public class MarcaController {
         return marcaService.list();
     }
     @PutMapping
-    List<Marca> update(@RequestBody  Marca marca){
-        return marcaService.update(marca);
+    List<Marca> update(@RequestPart String marca, @RequestPart  MultipartFile file) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Marca marca1 = objectMapper.readValue(marca, Marca.class);
+        return marcaService.update(marca1, file);
     }
     @DeleteMapping("{cod}")
     List<Marca> delete(@PathVariable("cod") Long cod){

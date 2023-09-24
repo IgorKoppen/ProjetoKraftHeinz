@@ -14,6 +14,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 @CrossOrigin(origins = {"http://localhost:3000"})
@@ -31,7 +32,11 @@ public class ProdutoController {
         ObjectMapper objectMapper = new ObjectMapper();
         Produto produto1 = objectMapper.readValue(produto, Produto.class);
         if(produto != null && file != null) {
-            return new ResponseEntity<>(produtoService.create(produto1, file), HttpStatus.OK);
+            try {
+                return new ResponseEntity<>(produtoService.create(produto1, file), HttpStatus.OK);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }else{
             return new ResponseEntity<>("Faltou parametros para produto e file", HttpStatus.BAD_REQUEST);
         }
@@ -42,8 +47,18 @@ public class ProdutoController {
         return produtoService.list();
     }
     @PutMapping
-    List<Produto> update(@RequestBody  Produto Produto){
-        return produtoService.update(Produto);
+    ResponseEntity<?>  update(@RequestBody  @RequestPart String produto, @RequestPart MultipartFile file) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Produto produto1 = objectMapper.readValue(produto, Produto.class);
+        if(produto != null && file != null) {
+            try {
+                return new ResponseEntity<>(produtoService.update(produto1, file), HttpStatus.OK);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }else{
+            return new ResponseEntity<>("Faltou parametros para produto e file", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("{cod}")
