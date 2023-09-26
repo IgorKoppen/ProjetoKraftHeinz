@@ -22,8 +22,7 @@ public class Produto {
     @Column(name = "imagem", columnDefinition="BLOB")
     private byte[] imagemProduto;
 
-    @Column(name = "type_pdt")
-    private String typeProduto;
+
     @ManyToOne
     @JoinColumn(name = "FUNCIONARIO_ID", nullable = false)
     @JsonBackReference(value = "produto-funcionario")
@@ -44,11 +43,10 @@ public class Produto {
 
     public  Produto(){}
 
-    public Produto(String nome, String descricao, byte[] imagemProduto, String typeProduto, Funcionario funcionario, Marca marca, Set<AvaliacaoFuncionario> avaliacaoFuncionarios, Set<AvaliacaoCliente> avaliacaoClientes) {
+    public Produto(String nome, String descricao, byte[] imagemProduto, Funcionario funcionario, Marca marca, Set<AvaliacaoFuncionario> avaliacaoFuncionarios, Set<AvaliacaoCliente> avaliacaoClientes) {
         this.nome = nome;
         this.descricao = descricao;
         this.imagemProduto = imagemProduto;
-        this.typeProduto = typeProduto;
         this.funcionario = funcionario;
         this.marca = marca;
         this.avaliacaoFuncionarios = avaliacaoFuncionarios;
@@ -87,13 +85,7 @@ public class Produto {
         this.imagemProduto = imagemProduto;
     }
 
-    public String getTypeProduto() {
-        return typeProduto;
-    }
 
-    public void setTypeProduto(String typeProduto) {
-        this.typeProduto = typeProduto;
-    }
 
     public Funcionario getFuncionario() {
         return funcionario;

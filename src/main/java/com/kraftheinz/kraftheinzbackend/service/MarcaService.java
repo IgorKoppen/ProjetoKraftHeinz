@@ -22,7 +22,6 @@ private MarcaRepository marcaRepository;
     public List<Marca> create(Marca marca, MultipartFile imagemFile)  {
         try {
             marca.setImagemMarca(imagemFile.getBytes());
-            marca.setTypeMarca(imagemFile.getName());
             marcaRepository.save(marca);
         } catch (IOException e){
             e.printStackTrace();
@@ -39,15 +38,11 @@ private MarcaRepository marcaRepository;
         return marcaRepository.findById(cod);
     }
 
-    public List<Marca> update(Marca marca,MultipartFile imagemFile){
-        try {
-            marca.setImagemMarca(imagemFile.getBytes());
-            marca.setTypeMarca(imagemFile.getName());
+    public List<Marca> update(Marca marca){
+       Optional<Marca> image = marcaRepository.findById(marca.getCodMarca());
+          marca.setImagemMarca(image.get().getImagemMarca());
             marcaRepository.save(marca);
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-        return list();
+            return list();
     }
     public List<Marca> delete(Long cod){
         marcaRepository.deleteById(cod);

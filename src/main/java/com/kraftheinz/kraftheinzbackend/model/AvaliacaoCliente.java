@@ -23,8 +23,8 @@ final public class AvaliacaoCliente{
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "AUX_AVALIACOES_CLIENTES",
-            joinColumns = @JoinColumn(name = "AVALIACOES_CLIENTE_ID"),
-            inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
+            joinColumns = @JoinColumn(name = "AVALIACOES_CLIENTE_ID",referencedColumnName = "AVALIACOES_CLIENTE_ID"),
+            inverseJoinColumns = @JoinColumn(name = "TAG_ID",referencedColumnName = "TAG_ID"))
     @JsonIgnoreProperties(value = {"avaliacaoFuncionario","avaliacaoCliente"})
     Set<Tag> tagsCliente;
 

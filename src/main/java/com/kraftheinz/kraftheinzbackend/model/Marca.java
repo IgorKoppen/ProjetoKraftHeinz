@@ -18,8 +18,6 @@ public class Marca {
     @Lob
     @Column(name = "imagem_marca", columnDefinition="BLOB")
     private byte[] imagemMarca;
-    @Column(name = "type_marca")
-    private String typeMarca;
 
     @ManyToOne
     @JoinColumn(name = "FUNCIONARIO_ID", nullable = false)
@@ -43,10 +41,9 @@ public class Marca {
     public Marca() {
     }
 
-    public Marca(String nome, byte[] imagemMarca, String typeMarca, Funcionario funcionario, Set<AvaliacaoFuncionario> avaliacaoFuncionarios, Set<AvaliacaoCliente> avaliacaoClientes, Set<Produto> produtos) {
+    public Marca(String nome, byte[] imagemMarca, Funcionario funcionario, Set<AvaliacaoFuncionario> avaliacaoFuncionarios, Set<AvaliacaoCliente> avaliacaoClientes, Set<Produto> produtos) {
         this.nome = nome;
         this.imagemMarca = imagemMarca;
-        this.typeMarca = typeMarca;
         this.funcionario = funcionario;
         this.avaliacaoFuncionarios = avaliacaoFuncionarios;
         this.avaliacaoClientes = avaliacaoClientes;
@@ -77,13 +74,7 @@ public class Marca {
         this.imagemMarca = imagemMarca;
     }
 
-    public String getTypeMarca() {
-        return typeMarca;
-    }
 
-    public void setTypeMarca(String typeMarca) {
-        this.typeMarca = typeMarca;
-    }
 
     public Funcionario getFuncionario() {
         return funcionario;

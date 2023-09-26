@@ -31,8 +31,8 @@ public class AvaliacaoFuncionario{
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "AUX_AVALIACOES_FUNCIONARIOS",
-            joinColumns = @JoinColumn(name = "AVALIACOES_FUNCIONARIO_ID"),
-            inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
+            joinColumns = @JoinColumn(name = "AVALIACOES_FUNCIONARIO_ID", referencedColumnName = "AVALIACOES_FUNCIONARIO_ID"),
+            inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "TAG_ID"))
     @JsonIgnoreProperties(value = {"avaliacaoFuncionario","avaliacaoCliente"})
     Set<Tag> tagsFuncionario;
     @ManyToOne
@@ -41,12 +41,12 @@ public class AvaliacaoFuncionario{
     private Funcionario funcionarios;
 
     @ManyToOne
-    @JoinColumn(name="produto_id", nullable=false)
+    @JoinColumn(name="produto_id", referencedColumnName = "PRODUTO_ID",columnDefinition = "PRODUTO_ID")
     @JsonBackReference(value = "produto-avaliacaofuncionarios")
     private Produto produtos;
 
     @ManyToOne
-    @JoinColumn(name="marca_id", nullable=false)
+    @JoinColumn(name="marca_id", referencedColumnName = "MARCA_ID",columnDefinition = "MARCA_ID")
     @JsonBackReference(value = "marcas-avaliacaofuncionario")
     private Marca marcas;
 

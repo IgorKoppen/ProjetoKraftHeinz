@@ -20,14 +20,12 @@ public class ProdutoService {
     private ProdutoService(ProdutoRepository produtoRepository) { this.produtoRepository = produtoRepository;}
     public List<Produto> create(Produto produto, MultipartFile imagemFile) throws IOException {
             produto.setImagemProduto(imagemFile.getBytes());
-            produto.setTypeProduto(imagemFile.getName());
             produtoRepository.save(produto);
         return list();
     }
     public List<Produto> list() { return produtoRepository.findAll();}
     public List<Produto> update(Produto produto, MultipartFile imagemFile) throws IOException {
             produto.setImagemProduto(imagemFile.getBytes());
-            produto.setTypeProduto(imagemFile.getName());
             produtoRepository.save(produto);
         return list();
     }
