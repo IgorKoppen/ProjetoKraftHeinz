@@ -25,6 +25,11 @@ public class AvaliacaoClienteController {
     }
     @GetMapping
     List<AvaliacaoCliente> list() { return avaliacaoClienteService.list(); }
+    @GetMapping("/getEncontraNota")
+    List<AvaliacaoCliente> objects(@RequestParam int valor) {
+        return avaliacaoClienteService.getEncontrarPorNota(valor);
+    }
+
 
     @PutMapping
     List<AvaliacaoCliente> update(@RequestBody AvaliacaoCliente avaliacaoCliente) { return avaliacaoClienteService.update(avaliacaoCliente); }

@@ -29,4 +29,8 @@ public class AvaliacaoClienteService {
     public List<Map<String, Object>> getAvalicaoAndMarcaAndProduto(){
         return avaliacaoClienteRepository.getAvaliacoesAvaliacaoClienteMarcasProdutos();
     }
+
+    public List<AvaliacaoCliente> getEncontrarPorNota(int valor){
+        return avaliacaoClienteRepository.getEncontrarPorNota(valor);
+    }
 }
