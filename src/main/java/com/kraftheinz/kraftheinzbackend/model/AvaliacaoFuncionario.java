@@ -28,6 +28,9 @@ public class AvaliacaoFuncionario{
     @Column(name = "usuario_postagem")
     private String usuarioPostagem;
 
+    @Column(name = "NOTA", nullable = true)
+    private int nota;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "AUX_AVALIACOES_FUNCIONARIOS",
@@ -50,21 +53,20 @@ public class AvaliacaoFuncionario{
     @JsonBackReference(value = "marcas-avaliacaofuncionario")
     private Marca marcas;
 
-    public AvaliacaoFuncionario( String mensagem, Date dataAvalicao, String redeSocial, String usuarioPostagem, Set<Tag> tags, Funcionario funcionarios, Produto produtos, Marca marcas) {
+    public AvaliacaoFuncionario(String mensagem, Date dataAvalicao, String redeSocial, String usuarioPostagem, int nota, Set<Tag> tagsFuncionario, Funcionario funcionarios, Produto produtos, Marca marcas) {
         this.mensagem = mensagem;
-        this.dataAvalicao = new Date(new java.util.Date().getTime());
+        this.dataAvalicao = dataAvalicao;
         this.redeSocial = redeSocial;
         this.usuarioPostagem = usuarioPostagem;
-        this.tagsFuncionario = tags;
+        this.nota = nota;
+        this.tagsFuncionario = tagsFuncionario;
         this.funcionarios = funcionarios;
         this.produtos = produtos;
         this.marcas = marcas;
     }
 
     public AvaliacaoFuncionario() {
-
     }
-
 
     public Long getCodAvalicaoFuncionario() {
         return codAvalicaoFuncionario;
@@ -106,12 +108,20 @@ public class AvaliacaoFuncionario{
         this.usuarioPostagem = usuarioPostagem;
     }
 
+    public int getNota() {
+        return nota;
+    }
+
+    public void setNota(int nota) {
+        this.nota = nota;
+    }
+
     public Set<Tag> getTagsFuncionario() {
         return tagsFuncionario;
     }
 
-    public void setTagsFuncionario(Set<Tag> tags) {
-        this.tagsFuncionario = tags;
+    public void setTagsFuncionario(Set<Tag> tagsFuncionario) {
+        this.tagsFuncionario = tagsFuncionario;
     }
 
     public Funcionario getFuncionarios() {

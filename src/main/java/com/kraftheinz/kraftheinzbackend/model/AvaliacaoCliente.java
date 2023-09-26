@@ -20,6 +20,10 @@ final public class AvaliacaoCliente{
     private String mensagem;
     @Column(name = "data_avaliacao_ac")
     private Date dataAvalicao = new Date(new java.util.Date().getTime());
+
+    @Column(name="NOTA", nullable = true)
+    private int Nota;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "AUX_AVALIACOES_CLIENTES",
@@ -43,10 +47,11 @@ final public class AvaliacaoCliente{
     @JsonBackReference(value = "marcas-avaliacaoclientes")
     private Marca marcas;
 
-    public AvaliacaoCliente(String mensagem, Date dataAvalicao, Set<Tag> tags, Cliente clientes, Produto produtos, Marca marcas) {
+    public AvaliacaoCliente(String mensagem, Date dataAvalicao, int nota, Set<Tag> tagsCliente, Cliente clientes, Produto produtos, Marca marcas) {
         this.mensagem = mensagem;
-        this.dataAvalicao = new Date(new java.util.Date().getTime());
-        this.tagsCliente = tags;
+        this.dataAvalicao = dataAvalicao;
+        Nota = nota;
+        this.tagsCliente = tagsCliente;
         this.clientes = clientes;
         this.produtos = produtos;
         this.marcas = marcas;
@@ -77,6 +82,14 @@ final public class AvaliacaoCliente{
 
     public void setDataAvalicao(Date dataAvalicao) {
         this.dataAvalicao = dataAvalicao;
+    }
+
+    public int getNota() {
+        return Nota;
+    }
+
+    public void setNota(int nota) {
+        Nota = nota;
     }
 
     public Set<Tag> getTagsCliente() {

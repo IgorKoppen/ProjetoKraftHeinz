@@ -5,6 +5,8 @@ import com.kraftheinz.kraftheinzbackend.service.AvaliacaoClienteService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+
 @CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("/avaliacaoclientes")
@@ -17,7 +19,10 @@ public class AvaliacaoClienteController {
     List<AvaliacaoCliente> create(@RequestBody AvaliacaoCliente avaliacaoCliente) {
         return avaliacaoClienteService.create(avaliacaoCliente);
     }
-
+    @GetMapping("/getMarcaProduto")
+    List<Map<String, Object>> objects() {
+        return avaliacaoClienteService.getAvalicaoAndMarcaAndProduto();
+    }
     @GetMapping
     List<AvaliacaoCliente> list() { return avaliacaoClienteService.list(); }
 

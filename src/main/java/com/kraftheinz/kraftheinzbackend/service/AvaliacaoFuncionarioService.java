@@ -5,6 +5,7 @@ import com.kraftheinz.kraftheinzbackend.repository.AvaliacaoFuncionarioRepositor
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AvaliacaoFuncionarioService {
@@ -24,5 +25,8 @@ public class AvaliacaoFuncionarioService {
         avaliacaoFuncionarioRepository.deleteById(cod);
         return list();
     }
+public List<Map<String, Object>> getAvalicaoAndMarcaAndProduto(){
+        return avaliacaoFuncionarioRepository.getAvaliacoesFuncionariosMarcasProdutos();
+}
 
 }

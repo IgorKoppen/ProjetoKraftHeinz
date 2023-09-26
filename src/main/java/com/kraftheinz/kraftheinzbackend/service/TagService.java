@@ -5,6 +5,7 @@ import com.kraftheinz.kraftheinzbackend.repository.TagRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TagService {
@@ -25,7 +26,9 @@ public class TagService {
         tagRepository.count();
         return count;
     }
-
+    public List<Map<String, Object>> getCountAvalicaoByTag(){
+        return tagRepository.countAvaliacoesClientesByTagName();
+    }
 
     public List<Tag> delete(Long cod) {
         tagRepository.deleteById(cod);

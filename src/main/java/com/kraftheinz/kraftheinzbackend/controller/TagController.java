@@ -7,7 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+
 @CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("/tags")
@@ -25,6 +28,11 @@ public class TagController {
             return new ResponseEntity<>("Faltou parametros para tag", HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("/getTagsAvalicao")
+    public Collection<Map<String, Object>> avaliacaoFuncionarioTags(){
+        return tagService.getCountAvalicaoByTag();
+    }
+
     @GetMapping
     List<Tag> list() {
         return tagService.list();
