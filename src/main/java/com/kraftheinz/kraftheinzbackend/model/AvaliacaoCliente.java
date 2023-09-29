@@ -22,7 +22,7 @@ final public class AvaliacaoCliente{
     private Date dataAvalicao = new Date(new java.util.Date().getTime());
 
     @Column(name="NOTA", nullable = true)
-    private int Nota;
+    private int nota;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
@@ -50,7 +50,7 @@ final public class AvaliacaoCliente{
     public AvaliacaoCliente(String mensagem, Date dataAvalicao, int nota, Set<Tag> tagsCliente, Cliente clientes, Produto produtos, Marca marcas) {
         this.mensagem = mensagem;
         this.dataAvalicao = dataAvalicao;
-        Nota = nota;
+        this.nota = nota;
         this.tagsCliente = tagsCliente;
         this.clientes = clientes;
         this.produtos = produtos;
@@ -85,11 +85,11 @@ final public class AvaliacaoCliente{
     }
 
     public int getNota() {
-        return Nota;
+        return nota;
     }
 
     public void setNota(int nota) {
-        Nota = nota;
+        this.nota = nota;
     }
 
     public Set<Tag> getTagsCliente() {

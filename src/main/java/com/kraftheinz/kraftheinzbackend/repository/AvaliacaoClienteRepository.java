@@ -14,7 +14,7 @@ public interface AvaliacaoClienteRepository extends JpaRepository<AvaliacaoClien
     @Query("SELECT new map(af as AvaliacaoCliente, c.primeroNome as PrimeiroNomeCliente, c.ultimoNome as UltimoNomeCliente, m.nome as NomeMarca, p.nome as NomeProduto) FROM AvaliacaoCliente af LEFT JOIN af.clientes c LEFT JOIN af.marcas m LEFT JOIN af.produtos p")
     List<Map<String, Object>> getAvaliacoesAvaliacaoClienteMarcasProdutos();
 
-    @Query("SELECT a FROM AvaliacaoCliente a WHERE a.Nota = :nota")
+    @Query("SELECT a FROM AvaliacaoCliente a WHERE a.nota = :nota")
     List<AvaliacaoCliente> getEncontrarPorNota(@Param("nota") int nota);
 
 }

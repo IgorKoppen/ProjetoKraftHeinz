@@ -30,7 +30,10 @@ public class MarcaController {
         Marca marca1 = objectMapper.readValue(marca, Marca.class);
         return marcaService.create(marca1, file);
     }
-
+@GetMapping("/getNota")
+Object getGrafico(){
+        return marcaService.sumNotasByName();
+}
     @GetMapping
     List<Marca> list() {
         return marcaService.list();

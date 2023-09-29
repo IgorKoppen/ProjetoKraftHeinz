@@ -2,6 +2,7 @@ package com.kraftheinz.kraftheinzbackend.controller;
 
 import com.kraftheinz.kraftheinzbackend.model.Funcionario;
 import com.kraftheinz.kraftheinzbackend.service.FuncionarioService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,4 +27,11 @@ public class FuncionarioController {
 
     @DeleteMapping("{cod}")
     List<Funcionario> delete(@PathVariable("cod") Long cod) { return funcionarioService.delete(cod); }
+
+
+    @PostMapping("/login")
+    ResponseEntity<?> login(@RequestParam(value = "email") String email, @RequestParam(value = "senha") String senha){
+        return funcionarioService.findByEmailSenha(email,senha);
+    }
 }
+

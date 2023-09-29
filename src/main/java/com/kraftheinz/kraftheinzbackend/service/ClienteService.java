@@ -36,6 +36,6 @@ public ResponseEntity<?> findByEmailSenha(String email, String senha){
   if (cliente == null)
       return new ResponseEntity<String>("Login ou senha não coicidem!", HttpStatus.NOT_FOUND);
   else
-      return new ResponseEntity<Cliente>(cliente, HttpStatus.FOUND);
+      return new ResponseEntity<Cliente>(cliente,HttpStatus.OK);
 }
 }

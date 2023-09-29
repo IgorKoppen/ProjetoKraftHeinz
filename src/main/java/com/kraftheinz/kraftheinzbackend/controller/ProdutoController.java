@@ -41,11 +41,15 @@ public class ProdutoController {
             return new ResponseEntity<>("Faltou parametros para produto e file", HttpStatus.BAD_REQUEST);
         }
     }
-
+    @GetMapping("/getNota")
+    Object getGrafico(){
+        return produtoService.sumNotasByName();
+    }
     @GetMapping
     List<Produto> list() {
         return produtoService.list();
     }
+
     @PutMapping
     ResponseEntity<?>  update(@RequestBody  @RequestPart String produto, @RequestPart MultipartFile file) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
