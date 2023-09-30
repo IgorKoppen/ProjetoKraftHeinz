@@ -4,8 +4,13 @@ import com.kraftheinz.kraftheinzbackend.model.Tag;
 import com.kraftheinz.kraftheinzbackend.repository.TagRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class TagService {
@@ -28,6 +33,37 @@ public class TagService {
     }
     public List<Map<String, Object>> getCountAvalicaoByTag(){
         return tagRepository.countAvaliacoesClientesByTagName();
+    }
+    public List<Map<String, Object>> getAvaliacoesPorDataETag() {
+        List<Map<String, Object>> avaliacoesClientesSugestao = tagRepository.findAvaliacoesClientesPorDataETag();
+        List<Map<String, Object>> avaliacoesClientesNaoSugestao = tagRepository.findAvaliacoesClientesPorDataETagExcetoSugestao();
+        List<Map<String, Object>> avaliacoesFuncionariosSugestao = tagRepository.findAvaliacoesFuncionariosPorDataETag();
+        List<Map<String, Object>> avaliacoesFuncionariosNaoSugestao = tagRepository.findAvaliacoesFuncionariosPorDataETagExcetoSugestao();
+
+        List<Map<String, Object>> avaliacoes = new ArrayList<>();
+        avaliacoes.addAll(avaliacoesClientesSugestao);
+        avaliacoes.addAll(avaliacoesClientesNaoSugestao);
+        avaliacoes.addAll(avaliacoesFuncionariosSugestao);
+        avaliacoes.addAll(avaliacoesFuncionariosNaoSugestao);
+
+        Map<LocalDate, Long> qtdSugestao = avaliacoes.stream()
+                .filter(map -> map != null && "Sugestão".equals(map.get("tag")))
+                .collect(Collectors.groupingBy(map -> ((Timestamp) map.get("data")).toLocalDateTime().toLocalDate(), Collectors.counting()));
+
+        Map<LocalDate, Long> qtdNaoSugestao = avaliacoes.stream()
+                .filter(map -> map != null && !"Sugestão".equals(map.get("tag")))
+                .collect(Collectors.groupingBy(map -> ((Timestamp) map.get("data")).toLocalDateTime().toLocalDate(), Collectors.counting()));
+
+        List<Map<String, Object>> json = new ArrayList<>();
+        for (LocalDate data : qtdSugestao.keySet()) {
+            Map<String, Object> avaliacao = new HashMap<>();
+            avaliacao.put("data", data);
+            avaliacao.put("Sugestões", qtdSugestao.get(data));
+            avaliacao.put("Avaliações", qtdNaoSugestao.getOrDefault(data, 0L));
+            json.add(avaliacao);
+        }
+
+        return json;
     }
 
     public List<Tag> delete(Long cod) {

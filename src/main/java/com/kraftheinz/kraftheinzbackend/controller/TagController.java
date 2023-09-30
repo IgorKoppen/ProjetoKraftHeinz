@@ -33,6 +33,8 @@ public class TagController {
         return tagService.getCountAvalicaoByTag();
     }
 
+    @GetMapping("/getGraficoSugestões")
+    public List<Map<String, Object>> avaliacaoPorDataTag(){return tagService.getAvaliacoesPorDataETag();}
     @GetMapping
     List<Tag> list() {
         return tagService.list();

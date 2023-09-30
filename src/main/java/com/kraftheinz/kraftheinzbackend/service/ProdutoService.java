@@ -65,14 +65,14 @@ public class ProdutoService {
 
             // Atualize a lista de resultados com o mapa de notas
             for (Map<String, Object> notaMap : notasMap) {
-                notaMap.put("Notas" + valorNota, mapaNotas.getOrDefault(notaMap.get("marca"), 0));
+                notaMap.put("Notas" + valorNota, mapaNotas.getOrDefault(notaMap.get("produto"), 0));
             }
 
             // Adicione os novos nomes e notas à lista de resultados
             for (String nome : mapaNotas.keySet()) {
                 boolean existe = false;
                 for (Map<String, Object> notaMap : notasMap) {
-                    if (notaMap.get("marca").equals(nome)) {
+                    if (notaMap.get("produto").equals(nome)) {
                         existe = true;
                         break;
                     }
