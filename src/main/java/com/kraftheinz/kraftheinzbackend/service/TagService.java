@@ -6,10 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,15 +33,11 @@ public class TagService {
     }
     public List<Map<String, Object>> getAvaliacoesPorDataETag() {
         List<Map<String, Object>> avaliacoesClientesSugestao = tagRepository.findAvaliacoesClientesPorDataETag();
-        List<Map<String, Object>> avaliacoesClientesNaoSugestao = tagRepository.findAvaliacoesClientesPorDataETagExcetoSugestao();
         List<Map<String, Object>> avaliacoesFuncionariosSugestao = tagRepository.findAvaliacoesFuncionariosPorDataETag();
-        List<Map<String, Object>> avaliacoesFuncionariosNaoSugestao = tagRepository.findAvaliacoesFuncionariosPorDataETagExcetoSugestao();
 
         List<Map<String, Object>> avaliacoes = new ArrayList<>();
         avaliacoes.addAll(avaliacoesClientesSugestao);
-        avaliacoes.addAll(avaliacoesClientesNaoSugestao);
         avaliacoes.addAll(avaliacoesFuncionariosSugestao);
-        avaliacoes.addAll(avaliacoesFuncionariosNaoSugestao);
 
         Map<LocalDate, Long> qtdSugestao = avaliacoes.stream()
                 .filter(map -> map != null && "Sugestão".equals(map.get("tag")))
@@ -54,12 +47,28 @@ public class TagService {
                 .filter(map -> map != null && !"Sugestão".equals(map.get("tag")))
                 .collect(Collectors.groupingBy(map -> ((Timestamp) map.get("data")).toLocalDateTime().toLocalDate(), Collectors.counting()));
 
+        Map<LocalDate, Map<String, Long>> resultado = new HashMap<>();
+
+
+        for (Map.Entry<LocalDate, Long> entry : qtdSugestao.entrySet()) {
+            resultado.put(entry.getKey(), new HashMap<String, Long>() {{
+                put("Sugestões", entry.getValue());
+            }});
+        }
+
+        for (Map.Entry<LocalDate, Long> entry : qtdNaoSugestao.entrySet()) {
+            resultado.computeIfAbsent(entry.getKey(), k -> new HashMap<>()).put("Avaliações", entry.getValue());
+        }
+
+
+
         List<Map<String, Object>> json = new ArrayList<>();
-        for (LocalDate data : qtdSugestao.keySet()) {
+        for (Map.Entry<LocalDate, Map<String, Long>> entry : resultado.entrySet()) {
+            LocalDate data = entry.getKey();
             Map<String, Object> avaliacao = new HashMap<>();
             avaliacao.put("data", data);
-            avaliacao.put("Sugestões", qtdSugestao.get(data));
-            avaliacao.put("Avaliações", qtdNaoSugestao.getOrDefault(data, 0L));
+            avaliacao.put("Sugestoes", entry.getValue().getOrDefault("Sugestões", 0L));
+            avaliacao.put("Avaliacoes", entry.getValue().getOrDefault("Avaliações", 0L));
             json.add(avaliacao);
         }
 

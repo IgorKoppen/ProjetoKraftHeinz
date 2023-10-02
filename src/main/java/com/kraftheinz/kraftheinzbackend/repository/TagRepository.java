@@ -23,7 +23,6 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
             "FROM AVALIACOESCLIENTES avaliacaoCliente " +
             "JOIN AUX_AVALIACOES_CLIENTES avaliacaoClienteTag ON avaliacaoClienteTag.AVALIACOES_CLIENTE_ID = avaliacaoCliente.AVALIACOES_CLIENTE_ID " +
             "JOIN TAGS tag ON tag.TAG_ID = avaliacaoClienteTag.TAG_ID " +
-            "WHERE tag.NOME_TAG = 'Sugestão' " +
             "GROUP BY avaliacaoCliente.DATA_AVALIACAO_AC, tag.NOME_TAG " +
             "ORDER BY avaliacaoCliente.DATA_AVALIACAO_AC", nativeQuery = true)
     List<Map<String, Object>> findAvaliacoesClientesPorDataETag();
@@ -32,27 +31,10 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
             "FROM AVALIACOESFUNCIONARIOS avaliacaoFuncionario " +
             "JOIN AUX_AVALIACOES_FUNCIONARIOS avaliacaoFuncionarioTag ON avaliacaoFuncionarioTag.AVALIACOES_FUNCIONARIO_ID = avaliacaoFuncionario.AVALIACOES_FUNCIONARIO_ID " +
             "JOIN TAGS tag ON tag.TAG_ID = avaliacaoFuncionarioTag.TAG_ID " +
-            "WHERE tag.NOME_TAG = 'Sugestão' " +
             "GROUP BY avaliacaoFuncionario.DATA_AVALIACAO_AF, tag.NOME_TAG " +
             "ORDER BY avaliacaoFuncionario.DATA_AVALIACAO_AF", nativeQuery = true)
     List<Map<String, Object>> findAvaliacoesFuncionariosPorDataETag();
 
-    @Query(value = "SELECT avaliacaoCliente.DATA_AVALIACAO_AC AS data, tag.NOME_TAG AS tag, COUNT(avaliacaoCliente.AVALIACOES_CLIENTE_ID) AS qtd " +
-            "FROM AVALIACOESCLIENTES avaliacaoCliente " +
-            "JOIN AUX_AVALIACOES_CLIENTES avaliacaoClienteTag ON avaliacaoClienteTag.AVALIACOES_CLIENTE_ID = avaliacaoCliente.AVALIACOES_CLIENTE_ID " +
-            "JOIN TAGS tag ON tag.TAG_ID = avaliacaoClienteTag.TAG_ID " +
-            "WHERE tag.NOME_TAG <> 'Sugestão' " +
-            "GROUP BY avaliacaoCliente.DATA_AVALIACAO_AC, tag.NOME_TAG " +
-            "ORDER BY avaliacaoCliente.DATA_AVALIACAO_AC", nativeQuery = true)
-    List<Map<String, Object>> findAvaliacoesClientesPorDataETagExcetoSugestao();
 
-    @Query(value = "SELECT avaliacaoFuncionario.DATA_AVALIACAO_AF AS data, tag.NOME_TAG AS tag, COUNT(avaliacaoFuncionario.AVALIACOES_FUNCIONARIO_ID) AS qtd " +
-            "FROM AVALIACOESFUNCIONARIOS avaliacaoFuncionario " +
-            "JOIN AUX_AVALIACOES_FUNCIONARIOS avaliacaoFuncionarioTag ON avaliacaoFuncionarioTag.AVALIACOES_FUNCIONARIO_ID = avaliacaoFuncionario.AVALIACOES_FUNCIONARIO_ID " +
-            "JOIN TAGS tag ON tag.TAG_ID = avaliacaoFuncionarioTag.TAG_ID " +
-            "WHERE tag.NOME_TAG <> 'Sugestão' " +
-            "GROUP BY avaliacaoFuncionario.DATA_AVALIACAO_AF, tag.NOME_TAG " +
-            "ORDER BY avaliacaoFuncionario.DATA_AVALIACAO_AF", nativeQuery = true)
-    List<Map<String, Object>> findAvaliacoesFuncionariosPorDataETagExcetoSugestao();
 
 }
